@@ -113,7 +113,7 @@ agent.exe
 ### Open Session
 #### • Start a Ligolo-ng session:
 ```powershell
-ligolo-ng >> session
+session
 ```
 
 ### Check Network and Routing
@@ -145,14 +145,16 @@ ip route add 192.168.2.0/24 dev ligolo
 
 ---
 
-## 🔄 Manage Tunnel
-
+### 🔄 Manage Tunnel
+#### • Start the tunnel:
 ```powershell
-[Agent: root@webserver] >> start
-
+start
+```
+#### • List active tunnels:
 ```powershell
-[Agent: root@webserver] » tunnel_list
-
+tunnel_list
+```
+#### • Scan ports on the Internal Network:
 ```powershell
 nmap -v -p- -sT 192.168.2.10
 ```
@@ -164,15 +166,16 @@ nmap -v -p- -sT 192.168.2.10
 Ligolo-ng uses a special CIDR range `240.0.0.0/4` to redirect traffic to the agent's local IP.
 
 ### Example
-
-```bash
+#### • Add route to local port:
+```powershell
 ip route add 240.0.0.1/32 dev ligolo
+```
+#### • Scan ports on the agent:
+```powershell
 nmap -v -p- -sT 240.0.0.1
 ```
-
-Access via browser:
-
-```
+#### • Access via browser:
+```powershell
 http://240.0.0.1
 ```
 
@@ -181,21 +184,24 @@ http://240.0.0.1
 ## 🛠️ Troubleshooting
 
 ### Check Proxy Server Logs
-
-```bash
+#### • Check logs for errors:
+```powershell
 cat /var/log/ligolo-ng.log
 ```
 
 ### Restart Proxy
-
-```bash
+#### • If the connection fails, restart the proxy:
+```powershell
 killall ligolo-proxy
+```
+#### • Again Start the Ligolo-ng proxy using a self-signed certificate:
+```powershell
 ligolo-proxy -selfcert -laddr 0.0.0.0:443
 ```
 
 ### Reset Tunnel Interface
-
-```bash
+#### • If the tunnel interface becomes unresponsive:
+```powershell
 ip link delete ligolo
 ```
 
@@ -204,14 +210,14 @@ ip link delete ligolo
 ## 🧹 Clean Up
 
 ### Delete Tunnel Interface
-
-```bash
+#### • To delete the Ligolo tunnel interface:
+```powershell
 ip link delete ligolo
 ```
 
 ### Kill Running Proxy
-
-```bash
+#### • Stop the proxy process:
+```powershell
 killall ligolo-proxy
 ```
 
@@ -220,34 +226,39 @@ killall ligolo-proxy
 ## 🔁 Pivoting and Port Forwarding
 
 ### Local Port Forwarding
-
-```bash
+#### • Forward local port 8080 to the remote machine through the Ligolo tunnel:
+```powershell
 ligolo-ng » tunnel add -local 8080 -remote 8080
 ```
 
 ### Remote Port Forwarding
-
-```bash
+#### • Forward remote port 8080 to the local machine:
+```powershell
 ligolo-ng » tunnel add -local 8080 -remote 192.168.1.7:8080
 ```
 
 ---
 
 ## 🔗 Establish Proxy Chains
+You can create multiple proxy chains using Ligolo-ng to bypass network restrictions and access isolated networks.
 
-1. Create the first tunnel:
+### Example
 
-```bash
+1. Create the first tunnel to the internal network:
+
+```powershell
 ligolo-ng » tunnel add -local 1080 -remote 10.0.0.1:1080
 ```
 
-2. Use `proxychains`:
+2. Use `proxychains` to tunnel traffic through Ligolo-ng :
 
-```bash
+```powershell
 proxychains firefox http://10.0.0.1
 ```
 
-> Ensure `proxychains.conf` is set to use `localhost:1080`.
+> proxychains will route traffic through the tunnel created by Ligolo-ng.
+>
+> Ensure that `proxychains.conf` is properly configured to use `localhost:1080` as the SOCKS proxy.
 
 ---
 
