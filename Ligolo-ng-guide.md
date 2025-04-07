@@ -1,6 +1,6 @@
 # Ligolo-ng
 
-**GitHub:** [Ligolo-ng GitHub Repository.](https://github.com/nicocha30/ligolo-ng)  
+**GitHub:** [Ligolo-ng-GitHub-Repository.](https://github.com/nicocha30/ligolo-ng)  
 
 Ligolo-ng is a powerful, lightweight VPN solution used for tunneling and pivoting within a compromised network. It creates a secure reverse tunnel between an agent (on the target) and a proxy server (on the attacker machine). It allows attackers to route traffic through the target machine, providing access to internal networks behind a firewall.
 
