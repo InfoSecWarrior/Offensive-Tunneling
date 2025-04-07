@@ -256,9 +256,12 @@ ligolo-ng » tunnel add -local 1080 -remote 10.0.0.1:1080
 proxychains firefox http://10.0.0.1
 ```
 
-> proxychains will route traffic through the tunnel created by Ligolo-ng.
->
-> Ensure that `proxychains.conf` is properly configured to use `localhost:1080` as the SOCKS proxy.
+  -  proxychains will route traffic through the tunnel created by Ligolo-ng.
+
+  -  Ensure that `proxychains.conf` is properly configured to use `localhost:1080` as the SOCKS proxy.
+
+
+
 
 ---
 
@@ -270,5 +273,3 @@ proxychains firefox http://10.0.0.1
 - Secure and rotate logs frequently.
 
 ---
-
-**🚨 Use responsibly in authorized environments only.**
